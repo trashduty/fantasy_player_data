@@ -100,7 +100,8 @@ players <- load_players()
               passing_first_downs = sum(first_down_pass,na.rm = T)
     ) |> 
     ungroup() |> 
-    rename(player_id = passer_id, player = passer, team = posteam)
+    rename(player_id = passer_id, player = passer, team = posteam) |> 
+    mutate(name_team = paste0(player, " (", team, ")"))
   
   # Wide Receivers (WR)
   # 
@@ -161,7 +162,8 @@ players <- load_players()
       ungroup() %>%
       left_join(wrs %>% select(gsis_id,position_group), by = c("receiver_id" = "gsis_id")) %>%
       relocate(position_group, .after = receiver) |> 
-      rename(player_id = receiver_id, player = receiver, team = posteam)
+      rename(player_id = receiver_id, player = receiver, team = posteam) |> 
+      mutate(name_team = paste0(player, " (", team, ")"))
 
     
     
@@ -235,7 +237,8 @@ players <- load_players()
         left_join(rb_rec, by = c("rusher_id" = "receiver_id",
                                  "rusher" = "receiver",
                                  "posteam" = "posteam")) %>%
-        rename(player_id = rusher_id, player = rusher, team = posteam)
+        rename(player_id = rusher_id, player = rusher, team = posteam) |> 
+        mutate(name_team = paste0(player, " (", team, ")"))
 
       
     
